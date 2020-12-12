@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  database:
+    build: ./database
+    env_file:
+      - database.env
+    volumes:
+      - ./dumps/:/dumps/
+    ports:
+      - "2022:22"
+      - "5432:5432"
+  web:
+    build: ./web
+    command: bash -c "/database/wait-for-database.sh database && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./database/wait-for-database.sh:/database/wait-for-database.sh
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+    env_file:
+      - web.env
