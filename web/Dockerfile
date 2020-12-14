@@ -5,6 +5,5 @@ RUN mkdir /code
 WORKDIR /code
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
-RUN apt update
-RUN apt-get install -y postgresql-client
+RUN apt update && apt-get install -y postgresql-client
 COPY ./disquaire/disquaire_project /code/
