@@ -2,6 +2,7 @@ version: "3.9"
 services:
   database:
     build: ./database
+    init: true
     env_file:
       - database.env
     volumes:
@@ -11,6 +12,7 @@ services:
       - "5432:5432"
   web:
     build: ./web
+    init: true
     command: bash -c "/database/wait-for-database.sh database && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./database/wait-for-database.sh:/database/wait-for-database.sh
