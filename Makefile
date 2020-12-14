@@ -13,9 +13,7 @@ help: ## Display callable targets.
 
 .PHONY: clean ## Removes all containers.
 clean: ## Remove all the containers
-	-docker image rm --force ${IMAGES}
-	-docker container rm --force ${CONTAINERS}
-	-docker system prune -a --volumes -f
+	-docker-compose rm --force
 
 .PHONY: up ## Up all containers.
 up: stop rm ## Up all the containers
